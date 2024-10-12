@@ -1,13 +1,13 @@
-var x = 1;
-
 function foo() {
-  var x = 10;
-  bar();
-  console.log("x: ", x);
+  console.log("global foo");
 }
 
 function bar() {
-  console.log("x: ", x);
+  foo();
+  function foo() {
+    console.log("local foo");
+  }
+  foo();
 }
 
 foo();

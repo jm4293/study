@@ -1,15 +1,17 @@
-var x = 1;
+var x = "global x";
+var y = "global y";
 
-if (true) {
-  var x = 10;
+function outer() {
+  var z = "local z";
+
+  function inner() {
+    var x = "local x";
+    console.log(x);
+    console.log(y);
+    console.log(z);
+  }
+
+  inner();
 }
 
-console.log("x: ", x);
-
-var i = 10;
-
-for (var i = 0; i < 5; i++) {
-  console.log(i);
-}
-
-console.log("i: ", i);
+outer();
