@@ -223,7 +223,7 @@ innerFunc(); // 20
         3. finally
             - Promise 상태 변경에 상관없이 무조건 실행할 콜백 함수
     5. Promise 체이닝
-  6. 
+
 #### 11. async, await
 1. Promise 체이닝에 따른 Promise hell에 따른 로직을 간결화
 
