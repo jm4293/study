@@ -1,17 +1,14 @@
-const global = "global";
+const x = 10;
 
 function outer() {
-  const outer = "outer";
+  const x = 20;
 
-  return function inner() {
-    const inner = "inner";
-    console.log(global, outer, inner);
-
-    return "inner 종료";
+  const inner = function () {
+    console.log(x);
   };
+
+  return inner;
 }
 
-const closure = outer();
-
-// console.log(closure);
-console.log(closure());
+const innerFunc = outer();
+innerFunc(); // 20
