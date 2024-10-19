@@ -1,6 +1,6 @@
 1. Node.JS 설치
 
-2. express 다운으로
+2. express 다운로드
     ```js
     1. npm init
     2. npm install express
