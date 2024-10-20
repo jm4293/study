@@ -10,27 +10,6 @@ export class AxiosConfigApi {
     this.axiosInstance.defaults.headers.common['Authorization'] = `${token}`;
   }
 
-  // async get(url, params, headers) {
-  //   return await this.axiosInstance.get(url, { params, headers });
-  // }
-  //
-  // static async post(url, data, headers) {
-  //   return await this.axiosInstance.post(url, data, { headers });
-  // }
-  //
-  // async put(url, data, headers) {
-  //   return await this.axiosInstance.put(url, data, { headers });
-  // }
-  //
-  // async delete(url, params, headers) {
-  //   return await this.axiosInstance.delete(url, { params, headers });
-  // }
-  //
-  // async patch(url, data, headers) {
-  //   return await this.axiosInstance.patch(url, data, { headers });
-  // }
-
-  // 공통 요청 처리 함수
   static async request(method, url, data = null, params = null, headers = {}) {
     try {
       return await this.axiosInstance.request({ method, url, data, params, headers });
@@ -59,7 +38,6 @@ export class AxiosConfigApi {
     }
   }
 
-  // HTTP 메서드 래퍼 함수들
   static async get(url, params, headers) {
     return await AxiosConfigApi.request('get', url, null, params, headers);
   }
