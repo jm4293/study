@@ -1,2 +1,3 @@
-export * from "./axios-config";
-export * from "./auth";
+export * from './axios-config';
+export * from './auth';
+export * from './board';
