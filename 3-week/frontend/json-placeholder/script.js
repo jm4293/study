@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((posts) => {
       posts.forEach((post) => {
         const listItem = document.createElement("li");
-        listItem.innerHTML = `<a href="detail/index.html?id=${post.id}">${post.id}. ${post.title}</a>`;
+        listItem.innerHTML = `<a href="detail/index.html?boardSeq=${post.id}">${post.id}. ${post.title}</a>`;
         postList.appendChild(listItem);
       });
     })

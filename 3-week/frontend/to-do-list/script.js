@@ -10,10 +10,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (task) {
       const li = document.createElement("li");
+
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
+
+      const text = document.createElement("p");
+      text.textContent = task;
+      text.style.margin = "0";
+      text.style.padding = "0 10px";
+
       li.appendChild(checkbox);
-      li.appendChild(document.createTextNode(task));
+      li.appendChild(text);
       todoList.appendChild(li);
       todoInput.value = "";
       updateDeleteButtonVisibility();
@@ -25,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkboxes = document.querySelectorAll(
       "#todoList li input[type='checkbox']",
     );
+
     checkboxes.forEach(function (checkbox) {
       if (checkbox.checked) {
         checkbox.parentElement.remove();
@@ -36,9 +44,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // 삭제 버튼 표시 여부 업데이트 함수
   function updateDeleteButtonVisibility() {
     if (todoList.children.length > 0) {
-      deleteBtn.classList.add("show");
+      deleteBtn.classList.add("active");
     } else {
-      deleteBtn.classList.remove("show");
+      deleteBtn.classList.remove("active");
     }
   }
 

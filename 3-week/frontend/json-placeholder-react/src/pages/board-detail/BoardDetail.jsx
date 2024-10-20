@@ -12,14 +12,17 @@ const BoardDetail = () => {
       .catch((error) => console.error("Error fetching post:", error));
   }, [id]);
 
-  if (!post) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <div className="container">
-      <h1>{post.title}</h1>
-      <p>{post.body}</p>
+      {post?.title ? (
+        <>
+          <h1>{post.title}</h1>
+          <p>{post.body}</p>
+        </>
+      ) : (
+        <h1>게시글을 찾을 수 없습니다.</h1>
+      )}
+
       <Link to="/" className="back-button">
         목록으로 돌아가기
       </Link>

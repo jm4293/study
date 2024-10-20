@@ -32,25 +32,25 @@ button {
     cursor: pointer;
 }
 
-button#addBtn {
+#addBtn {
     background-color: #28a745;
 }
 
-button#addBtn:hover {
+#addBtn:hover {
     background-color: #218838;
 }
 
-button#deleteBtn {
+#deleteBtn {
     background-color: #dc3545;
     display: none;
 }
 
-button#deleteBtn:hover {
+#deleteBtn:hover {
     background-color: #c82333;
 }
 
-button#deleteBtn.show {
-    display: inline-block; /* 리스트가 있으면 나타나도록 클래스 추가 */
+#deleteBtn.active {
+    display: block;
 }
 
 ul {

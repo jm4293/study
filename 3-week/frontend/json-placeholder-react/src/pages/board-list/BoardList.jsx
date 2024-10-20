@@ -15,13 +15,17 @@ const BoardList = () => {
     <div className="container">
       <h1>게시판 목록 - React</h1>
       <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <Link to={`/detail/${post.id}`}>
-              {post.id}. {post.title}
-            </Link>
-          </li>
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <li key={post.id}>
+              <Link to={`/detail/${post.id}`}>
+                {post.id}. {post.title}
+              </Link>
+            </li>
+          ))
+        ) : (
+          <p>로딩중...</p>
+        )}
       </ul>
     </div>
   );
