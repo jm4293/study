@@ -1,26 +1,25 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { AuthApi, ResponseCodeEnum } from '../../commons';
-import { useNavigate } from 'react-router-dom';
 
-export const SignUp = () => {
+export const FindPassword = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
     email: '',
     password: '',
-    name: '',
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await AuthApi.signUp(data);
+    const response = await AuthApi.findPassword(data);
 
     if (!!response) {
       const { result } = response.data;
 
       if (result === ResponseCodeEnum.SUCCESS) {
-        alert('회원가입이 완료되었습니다.');
+        alert('비밀번호 변경이 완료되었습니다.');
         navigate('/');
       }
     }
@@ -29,7 +28,7 @@ export const SignUp = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>회원가입</h2>
+        <h2>비밀번호 변경</h2>
         <div className="input-group">
           <label htmlFor="email">이메일</label>
           <input
@@ -39,7 +38,7 @@ export const SignUp = () => {
           />
         </div>
         <div className="input-group">
-          <label htmlFor="password">비밀번호</label>
+          <label htmlFor="password">변경 비밀번호</label>
           <input
             type="password"
             value={data.password}
@@ -47,12 +46,9 @@ export const SignUp = () => {
             required
           />
         </div>
-        <div className="input-group">
-          <label htmlFor="password">이름</label>
-          <input value={data.name} onChange={(e) => setData((prev) => ({ ...prev, name: e.target.value }))} required />
-        </div>
+
         <button type="submit" className="sign-up-button">
-          회원가입
+          변경
         </button>
       </form>
     </div>

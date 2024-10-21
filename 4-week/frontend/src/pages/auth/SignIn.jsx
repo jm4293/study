@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AuthApi, ResponseCodeEnum } from '../../commons';
 import { useNavigate } from 'react-router-dom';
 
-export default function SignIn() {
+export const SignIn = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -14,9 +14,9 @@ export default function SignIn() {
     const response = await AuthApi.login({ email, password });
 
     if (!!response) {
-      const { code } = response.data;
+      const { result } = response.data;
 
-      if (code === ResponseCodeEnum.SUCCESS) {
+      if (result === ResponseCodeEnum.SUCCESS) {
         navigate('/board-list');
       }
     }
@@ -24,6 +24,10 @@ export default function SignIn() {
 
   const onSignUpHandle = () => {
     navigate('/sign-up');
+  };
+
+  const onFindPasswordHandle = () => {
+    navigate('/find-password');
   };
 
   return (
@@ -42,11 +46,16 @@ export default function SignIn() {
           <button type="submit" className="sign-in-button">
             로그인
           </button>
-          <button type="button" className="sign-up-button" onClick={onSignUpHandle}>
-            회원가입
-          </button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button type="button" className="find-password-button" onClick={onFindPasswordHandle}>
+              비밀번호 변경
+            </button>
+            <button type="button" className="sign-up-button" onClick={onSignUpHandle}>
+              회원가입
+            </button>
+          </div>
         </div>
       </form>
     </div>
   );
-}
+};
