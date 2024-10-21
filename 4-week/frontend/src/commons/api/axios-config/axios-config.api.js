@@ -6,20 +6,15 @@ export class AxiosConfigApi {
     headers: { 'Content-Type': 'application/json', withCredentials: true },
   });
 
-  static setAuthorizationHeader(token) {
-    this.axiosInstance.defaults.headers.common['Authorization'] = `${token}`;
-  }
-
   static async request(method, url, data = null, params = null, headers = {}) {
     try {
       return await this.axiosInstance.request({ method, url, data, params, headers });
     } catch (error) {
-      console.log('error', error);
-      const { data, message } = error.response.data;
+      const { message } = error.response.data;
 
       switch (error.response.status) {
         case 400:
-          alert(data);
+          alert(message);
           break;
         case 401:
           alert('로그인이 필요합니다.');
@@ -32,9 +27,11 @@ export class AxiosConfigApi {
           alert('서버 오류입니다.');
           break;
         default:
-          alert(data);
+          alert(message);
           break;
       }
+
+      throw error;
     }
   }
 
@@ -43,18 +40,26 @@ export class AxiosConfigApi {
   }
 
   static async post(url, data, headers) {
-    return await AxiosConfigApi.request('post', url, data, null, headers);
+    if (!!headers) {
+      return await AxiosConfigApi.request('post', url, data, null, headers);
+    } else {
+      return await AxiosConfigApi.request('post', url, data);
+    }
   }
 
-  async put(url, data, headers) {
+  static async put(url, data, headers) {
     return await AxiosConfigApi.request('put', url, data, null, headers);
   }
 
-  async delete(url, params, headers) {
+  static async delete(url, params, headers) {
     return await AxiosConfigApi.request('delete', url, null, params, headers);
   }
 
-  async patch(url, data, headers) {
+  static async patch(url, data, headers) {
     return await AxiosConfigApi.request('patch', url, data, null, headers);
+  }
+
+  static setAuthorizationHeader(token) {
+    this.axiosInstance.defaults.headers.common['Authorization'] = `${token}`;
   }
 }

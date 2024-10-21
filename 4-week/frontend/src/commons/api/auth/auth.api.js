@@ -7,11 +7,13 @@ export class AuthApi extends AxiosConfigApi {
     try {
       const response = await AxiosConfigApi.post(`${this._baseUrl}/sign-in`, data);
 
-      const token = response.headers['authorization'];
+      if (response) {
+        const token = response.headers['authorization'];
 
-      AxiosConfigApi.setAuthorizationHeader(token);
+        AxiosConfigApi.setAuthorizationHeader(token);
 
-      return response;
+        return response;
+      }
     } catch (error) {
       // throw error;
     }
@@ -20,6 +22,14 @@ export class AuthApi extends AxiosConfigApi {
   static async signUp(data) {
     try {
       return await AxiosConfigApi.post(`${this._baseUrl}/sign-up`, data);
+    } catch (error) {
+      // throw error;
+    }
+  }
+
+  static async findPassword(data) {
+    try {
+      return await AxiosConfigApi.patch(`${this._baseUrl}/change-password`, data);
     } catch (error) {
       // throw error;
     }
