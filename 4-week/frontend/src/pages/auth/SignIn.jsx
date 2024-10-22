@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AuthApi, ResponseCodeEnum } from '../../commons';
 import { useNavigate } from 'react-router-dom';
+import { useSessionStorage } from '../../hooks';
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -8,15 +9,21 @@ export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { setSessionStory } = useSessionStorage();
+
   const onSubmitHandle = async (e) => {
     e.preventDefault();
 
     const response = await AuthApi.login({ email, password });
 
     if (!!response) {
-      const { result } = response.data;
+      const { data, result } = response.data;
 
       if (result === ResponseCodeEnum.SUCCESS) {
+        setSessionStory('token', response.headers['authorization'].split(' ')[1]);
+        setSessionStory('email', data.email);
+        setSessionStory('name', data.name);
+
         navigate('/board-list');
       }
     }
@@ -35,7 +42,7 @@ export const SignIn = () => {
       <form onSubmit={onSubmitHandle} className="login-form">
         <h2>로그인</h2>
         <div className="input-group">
-          <label htmlFor="email">이메일</label>
+          <label htmlFor="email">아이디</label>
           <input value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
         <div className="input-group">

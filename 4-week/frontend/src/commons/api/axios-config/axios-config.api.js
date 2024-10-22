@@ -52,7 +52,7 @@ export class AxiosConfigApi {
   }
 
   static async delete(url, params, headers) {
-    return await AxiosConfigApi.request('delete', url, null, params, headers);
+    return await AxiosConfigApi.request('delete', url, {}, params, headers);
   }
 
   static async patch(url, data, headers) {

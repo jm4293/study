@@ -31,7 +31,7 @@ export const SignUp = () => {
       <form onSubmit={handleSubmit} className="login-form">
         <h2>회원가입</h2>
         <div className="input-group">
-          <label htmlFor="email">이메일</label>
+          <label htmlFor="email">아이디</label>
           <input
             value={data.email}
             onChange={(e) => setData((prev) => ({ ...prev, email: e.target.value }))}
