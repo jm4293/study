@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../../components';
 import { BoardCommentApi } from '../../../commons/api/board-comment';
 import dayjs from 'dayjs';
 import { useSessionStorage } from '../../../hooks';
 
-export const CommentList = ({ boardId, commentList, setCommentList, isMine }) => {
+export const CommentList = ({ boardId }) => {
   const [content, setContent] = useState([]);
+  const [commentList, setCommentList] = useState([]);
 
   const { getSessionStorage } = useSessionStorage();
 
@@ -21,8 +22,7 @@ export const CommentList = ({ boardId, commentList, setCommentList, isMine }) =>
       const commentResponse = await BoardCommentApi.getBoardCommentList(boardId);
 
       setCommentList(commentResponse);
-
-      alert('댓글이 작성되었습니다.');
+      setContent('');
     } catch (error) {}
   };
 
@@ -33,11 +33,19 @@ export const CommentList = ({ boardId, commentList, setCommentList, isMine }) =>
         const commentResponse = await BoardCommentApi.getBoardCommentList(boardId);
 
         setCommentList(commentResponse);
-
-        alert('댓글이 삭제되었습니다.');
       } catch (error) {}
     }
   };
+
+  useEffect(() => {
+    if (!!boardId) {
+      (async () => {
+        const commentResponse = await BoardCommentApi.getBoardCommentList(boardId);
+
+        setCommentList(commentResponse);
+      })();
+    }
+  }, [boardId]);
 
   return (
     <div className="container">

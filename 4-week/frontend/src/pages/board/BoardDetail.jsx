@@ -10,10 +10,9 @@ export const BoardDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const [isMine, setIsMine] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [isMine, setIsMine] = useState(false);
-  const [commentList, setCommentList] = useState([]);
 
   const { getSessionStorage } = useSessionStorage();
 
@@ -66,7 +65,6 @@ export const BoardDetail = () => {
     if (!!id) {
       (async () => {
         const boardResponse = await BoardApi.getBoardDetail(id);
-        const commentResponse = await BoardCommentApi.getBoardCommentList(id);
 
         if (boardResponse.email === getSessionStorage('email')) {
           setIsMine(true);
@@ -74,8 +72,6 @@ export const BoardDetail = () => {
 
         setTitle(boardResponse.title);
         setContent(boardResponse.content);
-
-        setCommentList(commentResponse);
       })();
     }
   }, [id]);
@@ -87,10 +83,16 @@ export const BoardDetail = () => {
           {!!id ? <h1 className="mx-auto">No. {id}번째 작성 글</h1> : <h1 className="mx-auto">게시글 작성</h1>}
         </div>
 
-        <form onSubmit={onSubmitHandle}>
+        <form className="mb-4" onSubmit={onSubmitHandle}>
           <div className="input-group">
             <label htmlFor="title">제목</label>
-            <input className="border-2" value={title} onChange={(e) => setTitle(e.target.value)} required />
+            <input
+              className="border-2"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              readOnly={!isMine}
+              required
+            />
           </div>
           <div className="input-group">
             <label htmlFor="content">내용</label>
@@ -98,6 +100,7 @@ export const BoardDetail = () => {
               className="w-full border-2 resize-none p-2"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              readOnly={!isMine}
               required
             />
           </div>
@@ -118,7 +121,7 @@ export const BoardDetail = () => {
           <Button onClick={onBackHandle}>뒤로가기</Button>
         </div>
       </div>
-      <CommentList {...{ boardId: id, commentList, setCommentList, isMine }} />
+      <CommentList {...{ boardId: id }} />
     </>
   );
 };
