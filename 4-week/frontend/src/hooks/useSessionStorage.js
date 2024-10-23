@@ -1,5 +1,5 @@
 export const useSessionStorage = () => {
-  const setSessionStory = (key, value) => {
+  const setSessionStorage = (key, value) => {
     try {
       sessionStorage.setItem(key, value);
     } catch (error) {
@@ -7,7 +7,7 @@ export const useSessionStorage = () => {
     }
   };
 
-  const getSessionStory = (key) => {
+  const getSessionStorage = (key) => {
     try {
       return sessionStorage.getItem(key);
     } catch (error) {
@@ -15,5 +15,5 @@ export const useSessionStorage = () => {
     }
   };
 
-  return { setSessionStory, getSessionStory };
+  return { setSessionStorage, getSessionStorage };
 };

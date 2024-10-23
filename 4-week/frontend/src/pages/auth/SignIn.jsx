@@ -9,7 +9,7 @@ export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { setSessionStory } = useSessionStorage();
+  const { setSessionStorage } = useSessionStorage();
 
   const onSubmitHandle = async (e) => {
     e.preventDefault();
@@ -20,9 +20,9 @@ export const SignIn = () => {
       const { data, result } = response.data;
 
       if (result === ResponseCodeEnum.SUCCESS) {
-        setSessionStory('token', response.headers['authorization'].split(' ')[1]);
-        setSessionStory('email', data.email);
-        setSessionStory('name', data.name);
+        setSessionStorage('token', response.headers['authorization'].split(' ')[1]);
+        setSessionStorage('email', data.email);
+        setSessionStorage('name', data.name);
 
         navigate('/board-list');
       }
