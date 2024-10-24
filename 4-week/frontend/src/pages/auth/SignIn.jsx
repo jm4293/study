@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthApi, ResponseCodeEnum } from '../../commons';
 import { useNavigate } from 'react-router-dom';
-import { useSessionStorage } from '../../hooks';
+import { useStorage } from '../../hooks';
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { setSessionStorage } = useSessionStorage();
+  const { getLocalStorage, setSessionStorage, setLocalStorage } = useStorage();
 
   const onSubmitHandle = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ export const SignIn = () => {
       const { data, result } = response.data;
 
       if (result === ResponseCodeEnum.SUCCESS) {
-        setSessionStorage('token', response.headers['authorization'].split(' ')[1]);
+        setLocalStorage('refreshToken', data.refreshToken);
         setSessionStorage('email', data.email);
         setSessionStorage('name', data.name);
 
@@ -36,6 +36,14 @@ export const SignIn = () => {
   const onFindPasswordHandle = () => {
     navigate('/find-password');
   };
+
+  useEffect(() => {
+    const refreshToken = getLocalStorage('refreshToken');
+
+    if (refreshToken) {
+      navigate('/board-list');
+    }
+  }, []);
 
   return (
     <div className="login-container">

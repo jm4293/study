@@ -54,4 +54,12 @@ export class AuthApi extends AxiosConfigApi {
       // throw error;
     }
   }
+
+  // static async refreshToken() {
+  //   try {
+  //     return await AxiosConfigApi.get(`${this._baseUrl}/refresh-token`);
+  //   } catch (error) {
+  //     // throw error;
+  //   }
+  // }
 }

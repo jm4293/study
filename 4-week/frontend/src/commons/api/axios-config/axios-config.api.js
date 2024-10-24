@@ -17,8 +17,29 @@ export class AxiosConfigApi {
           alert(message);
           break;
         case 401:
-          alert('로그인이 필요합니다.');
-          window.location.href = '/';
+          const refreshToken = localStorage.getItem('refreshToken');
+
+          if (!refreshToken) {
+            alert('로그인이 필요합니다.');
+            window.location.href = '/';
+          }
+
+          const response = await this.post(
+            `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/${process.env.REACT_APP_GLOBAL_PREFIX}/auth/refresh-token`,
+            { refreshToken },
+          );
+
+          if (response) {
+            const token = response.headers['authorization'];
+            this.setAuthorizationHeader(token);
+
+            const { url, method, data } = error.config;
+
+            return await this.axiosInstance.request({ method, url, data, params, headers });
+          } else {
+            alert('로그인이 필요합니다.');
+            window.location.href = '/';
+          }
           break;
         case 404:
           alert('찾을 수 없는 요청입니다.');

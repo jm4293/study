@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '../../../components';
 import { BoardCommentApi } from '../../../commons/api/board-comment';
 import dayjs from 'dayjs';
-import { useSessionStorage } from '../../../hooks';
+import { useStorage } from '../../../hooks';
 
 export const CommentList = ({ boardId }) => {
   const [content, setContent] = useState([]);
   const [commentList, setCommentList] = useState([]);
 
-  const { getSessionStorage } = useSessionStorage();
+  const { getSessionStorage } = useStorage();
 
   const onSubmitHandle = async (e) => {
     e.preventDefault();
@@ -73,7 +73,7 @@ export const CommentList = ({ boardId }) => {
                 <div>{comment.name}</div>
                 <div>{dayjs(comment.createdAt).format('YYYY-MM-DD')}</div>
                 {comment.email === getSessionStorage('email') && (
-                  <Button className="bg-red-500" onClick={() => onDeleteHandle(comment.id)}>
+                  <Button className="bg-red-500 hover:bg-red-700" onClick={() => onDeleteHandle(comment.id)}>
                     삭제
                   </Button>
                 )}

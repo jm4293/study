@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BoardApi } from '../../commons';
-import { useSessionStorage } from '../../hooks';
+import { useStorage } from '../../hooks';
 import { CommentList } from './comment/CommentList';
-import { BoardCommentApi } from '../../commons/api/board-comment';
 
 export const BoardDetail = () => {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ export const BoardDetail = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const { getSessionStorage } = useSessionStorage();
+  const { getSessionStorage } = useStorage();
 
   const onSubmitHandle = async (e) => {
     e.preventDefault();
@@ -107,7 +106,7 @@ export const BoardDetail = () => {
           <div className="flex justify-end items-center gap-2">
             {isMine && (
               <div className="flex gap-2">
-                <Button className="bg-red-500" onClick={onDeleteHandle}>
+                <Button className="bg-red-500 hover:bg-red-700" onClick={onDeleteHandle}>
                   삭제
                 </Button>
                 <Button onClick={onModifyHandle}>수정</Button>
